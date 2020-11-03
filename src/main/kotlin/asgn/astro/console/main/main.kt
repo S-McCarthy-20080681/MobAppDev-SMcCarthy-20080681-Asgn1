@@ -2,32 +2,27 @@ package asgn.astro.console.main
 
 import asgn.astro.console.models.AstroEventModel
 import asgn.astro.console.models.AstroListModel
+import com.sun.java.accessibility.util.EventID
 import mu.KotlinLogging
 import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
 
-//var list = "" //to be replaced with an actual List later
-var title = "" //such as Perseids, total lunar eclipse, etc
-var category = "" //such as meteor shower, eclipse, etc
-var closestTime = "" //when that event will next happen; to be replaced by Date
-var nextTime = "" //when the event will happen again after the closest time; to be replaced by Date
-
 val lists = ArrayList<AstroListModel>()
 var astroList = AstroListModel()
 val events = ArrayList<AstroEventModel>()
 var astroEvent = AstroEventModel()
 
-var input = 5
-
 fun main (args: Array<String>) {
+
+//  -> -> -> BUG: Need to double-enter 0 before the program will close. <- <- <-  //
 
     logger.info { "Launching AstroTracker App" }
     println("AstroTracker App Version 1.0")
     println("Susan McCarthy, 20080681")
 
-   // var input: Int
+    var input: Int
 
     do {
         input = mainMenu()
@@ -40,10 +35,11 @@ fun main (args: Array<String>) {
                 do {
                     input = internalMenu()
                     when (input) {
-                        1 -> expandList()
+                        1 -> expandLists()
                         2 -> addEvent()
                         3 -> deleteEvent()
                         4 -> updateEvent()
+                        5 -> searchEvent()
                         9 -> {
                             println("Returning to Main Menu")
                             mainMenu()
@@ -55,6 +51,7 @@ fun main (args: Array<String>) {
                 logger.info { "Returning to AstroTracker Main Menu" }
             }
 
+            6 -> searchList()
             0 -> {
                 println("Exiting App, Goodbye :)")
 
@@ -71,7 +68,7 @@ fun main (args: Array<String>) {
 //        do {
 //            input = internalMenu()
 //            when (input) {
-//                1 -> expandList()
+//                1 -> expandLists()
 //                2 -> addEvent()
 //                3 -> deleteEvent()
 //                4 -> updateEvent()
@@ -103,6 +100,7 @@ fun mainMenu() : Int {
     println("3. View all existing tracker lists")
     println("4. Rename an existing list")
     println("5. Event Editor Menu")
+    println("6. Search for a List")
     println("0. Exit App")
     println("Please select an option: ")
     input = readLine()!! //takes in the user's choice
@@ -119,11 +117,12 @@ fun internalMenu(): Int {
     var subOption : Int
     var input : String? = null
 
-    println("You are now viewing the tracker list Edit Menu")
-    println("1. Expand a list")
-    println("2. Add an Event to an existing list")
-    println("3. Remove an Event from an existing list")
+    println("You are now viewing the tracker list Event Editor Menu")
+    println("1. Expand all Lists") //used as a version of display, to listAllEvents WITHIN each List
+    println("2. Add an Event to an existing List")
+    println("3. Remove an Event from an existing List")
     println("4. Update/Change an Event")
+    println("5. Search for an Event")
     println("9. Return to Main Menu")
     input = readLine()!!
     subOption = if (input.toIntOrNull() != null && !input.isEmpty())
@@ -142,10 +141,12 @@ fun addList() {
     print("Name your list: ")
     astroList.list = readLine()!!
 
+
     if (astroList.list.isNotEmpty()) {
+        astroList.listID++
         lists.add(astroList.copy())
         println("You have created the AstroTracker list '${astroList.list}'. Now add some events!")
-        internalMenu() //brings the user back to the Edit Menu so they can add events to their new list
+       // internalMenu() //brings the user back to the Edit Menu so they can add events to their new list
     } else
         logger.info { "List was not created..." }
 
@@ -169,12 +170,18 @@ fun updateList() {
 
 fun displayAllLists() {
     println("Current Lists:")
+    lists.forEach{ println("ID: ${astroList.listID}, Name: ${astroList.list}") }
+  //  lists.forEach { logger.info("${it}") }
     println()
-    lists.forEach { logger.info("${it}") }
 }
 
-fun expandList() {
-    TODO()
+fun expandLists() {
+    println("Events in each List:")
+    println()
+//    lists.forEach { //print each Event within each List when they are changed to Arrays later on
+        events.forEach { logger.info("${it}") }
+//    }
+    println()
 }
 
 fun addEvent() {
@@ -182,32 +189,36 @@ fun addEvent() {
     println("Add an Event")
     println()
 
-    print("What's happening?")
+    astroEvent.eventID++
+
+    print("What's happening? \n")
     astroEvent.title = readLine()!!
     println()
 
-    print("Choose a category: Meteor Shower|Lunar Eclipse|Solar Eclipse|Supermoon")
+    print("Choose a category: Meteor Shower|Lunar Eclipse|Solar Eclipse|Supermoon \n")
     astroEvent.category = readLine()!!
     println()
 
-    print("When will it happen? [dd/mm/yyyy]")
+    print("When will it happen? [dd/mm/yyyy] \n")
     astroEvent.closestTime = readLine()!!
     println()
 
-    print("When will it next happen? [dd/mm/yyyy]")
+    print("When will it next happen? [dd/mm/yyyy] \n")
     astroEvent.nextTime = readLine()!!
     println()
 
     if (astroEvent.title.isNotEmpty() && astroEvent.category.isNotEmpty() && astroEvent.closestTime.isNotEmpty()
         && astroEvent.nextTime.isNotEmpty()) {
 
-        print("Here is your new Event: ")
+//        astroEvent.eventID++
+        events.add(astroEvent.copy())
+
+        print("Here is your new Event:\n")
         print(
             "Title: ${astroEvent.title} \n Category: ${astroEvent.category} \n " +
-                    "Occurring: ${astroEvent.closestTime} \n Next Occurrence: ${astroEvent.nextTime}"
+                    "Occurring: ${astroEvent.closestTime} \n Next Occurrence: ${astroEvent.nextTime} \n"
         )
 
-        internalMenu() //brings the user back to the Edit Menu in case they want to add another event
     } else
         logger.info { "Event was not created..." }
 
@@ -224,25 +235,104 @@ fun updateEvent() {
 
     //code to ask user to choose a list, then display all events of that list for user to pick and update one
 
-    print("Enter a new name for your '$title' Event: ")
-    title = readLine()!!
+    print("Enter a new name for your '${astroEvent.title}' Event: \n")
+    astroEvent.title = readLine()!!
     println()
 
-    print("Enter a new category for your '$category' Event: Meteor Shower|Lunar Eclipse|Solar Eclipse|Supermoon")
-    category = readLine()!!
+    print("Enter a new category for your '${astroEvent.category}' Event: Meteor Shower|Lunar Eclipse|Solar Eclipse|Supermoon \n")
+    astroEvent.category = readLine()!!
     println()
 
-    print("Enter a new date for your Event on '$closestTime': [dd/mm/yyyy]")
-    closestTime = readLine()!!
+    print("Enter a new date for your Event on '${astroEvent.closestTime}': [dd/mm/yyyy] \n")
+    astroEvent.closestTime = readLine()!!
     println()
 
-    print("Currently, this Event will next occur on: $nextTime")
-    print("Enter a new next-date for your Event: [dd/mm/yyyy]")
-    nextTime = readLine()!!
+    print("Currently, this Event will next occur on: ${astroEvent.nextTime}")
+    print("Enter a new next-date for your Event: [dd/mm/yyyy] \n")
+    astroEvent.nextTime = readLine()!!
     println()
 
     print("Here is your updated Event: ")
-    print("Title: $title \n Category: $category \n Occurring: $closestTime \n Next Occurrence: $nextTime")
+    print("Title: ${astroEvent.title} \n Category: ${astroEvent.category} \n " +
+            "Occurring: ${astroEvent.closestTime} \n Next Occurrence: ${astroEvent.nextTime}")
+    println()
 
-    internalMenu() //returns to Edit Menu
+}
+
+fun getListID(): Long {
+
+    var strID : String? //String to hold user input
+    var searchID : Long //Long to hold converted string ID
+    print("Enter List ID: ")
+    strID = readLine()!!
+    searchID = if (strID.toLongOrNull() != null && !strID.isEmpty())
+        strID.toLong()
+    else
+        -9
+    return searchID
+
+}
+
+fun listSearch(listID: Long): AstroListModel? {
+
+    var foundList: AstroListModel? = lists.find { l -> l.listID == listID } //checks to see if there's a list ID stored that matches what's being searched
+    return foundList
+
+}
+
+fun getEventID(): Long {
+
+    var strID : String? //String to hold user input
+    var searchID : Long //Long to hold converted string ID
+    print("Enter Entry ID: ")
+    strID = readLine()!!
+    searchID = if (strID.toLongOrNull() != null && !strID.isEmpty())
+        strID.toLong()
+    else
+        -9
+    return searchID
+
+}
+
+fun eventSearch(eventID: Long): AstroEventModel? {
+
+    var foundEvent: AstroEventModel? = events.find { e -> e.eventID == eventID } //checks to see if there's an event ID stored that matches what's being searched
+    return foundEvent
+
+}
+
+fun searchList() {
+
+    var searchID = getListID()
+    val aList = listSearch(searchID)
+
+    if (aList != null)
+        println("List Found: $aList")
+    else
+        println("List not found...")
+
+}
+
+fun searchEvent() {
+
+    var searchID = getEventID()
+    val anEvent = eventSearch(searchID)
+
+    if (anEvent != null)
+        println("Event Found: $anEvent")
+    else
+        println("Event not found...")
+
+}
+
+fun dummyListData() {
+    lists.add(AstroListModel(1, "testList1"))
+    lists.add(AstroListModel(2, "testList2"))
+    lists.add(AstroListModel(3, "testList3"))
+}
+
+fun dummyEventData() {
+    events.add(AstroEventModel(1, "Total Lunar Eclipse", "Lunar Eclipse", "23/04/2021", "05/11/2023"))
+    events.add(AstroEventModel(2, "Perseids", "Meteor Shower", "03/11/2020", "14/02/2021"))
+    events.add(AstroEventModel(3, "Draconids", "Meteor Shower", "01/01/2021", "30/07/2021"))
 }
