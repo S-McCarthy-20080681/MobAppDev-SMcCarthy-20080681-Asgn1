@@ -1,8 +1,9 @@
 package asgn.astro.console.main
 
+import asgn.astro.console.models.AstroEventModel
+import asgn.astro.console.models.AstroListModel
 import mu.KotlinLogging
-import java.text.DateFormat
-import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
@@ -13,6 +14,10 @@ var category = "" //such as meteor shower, eclipse, etc
 var closestTime = "" //when that event will next happen; to be replaced by Date
 var nextTime = "" //when the event will happen again after the closest time; to be replaced by Date
 
+val lists = ArrayList<AstroListModel>()
+var astroList = AstroListModel()
+val events = ArrayList<AstroEventModel>()
+var astroEvent = AstroEventModel()
 
 fun main (args: Array<String>) {
 
@@ -115,10 +120,14 @@ fun addList() {
     println()
 
     print("Name your list: ")
-    list = readLine()!!
-    println("You have created the AstroTracker list '$list'. Now add some events!")
+    astroList.list = readLine()!!
 
-    internalMenu() //brings the user back to the Edit Menu so they can add events to their new list
+    if (astroList.list.isNotEmpty()) {
+        lists.add(astroList.copy())
+        println("You have created the AstroTracker list '${astroList.list}'. Now add some events!")
+        internalMenu() //brings the user back to the Edit Menu so they can add events to their new list
+    } else
+        logger.info { "List was not created..." }
 
 }
 
@@ -139,7 +148,9 @@ fun updateList() {
 }
 
 fun displayAllLists() {
-    println("This will return all lists currently stored by the app.")
+    println("Current Lists:")
+    println()
+    lists.forEach { logger.info("${it}") }
 }
 
 fun expandList() {
