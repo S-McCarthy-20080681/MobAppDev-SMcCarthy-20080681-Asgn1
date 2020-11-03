@@ -16,9 +16,8 @@ fun main (args: Array<String>) {
     do {
         input = mainMenu()
         when (input) {
-            1 -> println("You chose to create a new tracker list")
-            2 -> println("You chose to delete an existing tracker list")
-//            3 -> println("You chose to view all existing tracker lists - this will prompt an internal menu")
+            1 -> addList()
+            2 -> deleteList()
             3 -> internalMenu()
             0 -> {
                 println("Exiting App, Goodbye :)")
@@ -33,10 +32,10 @@ fun main (args: Array<String>) {
     do {
         subInput = internalMenu()
         when (subInput) {
-            1 -> println("Here are all tracker lists currently in the system")
-            2 -> println("Here's where you can add a single Event to a pre-existing list")
-            3 -> println("Here's where you can delete a single Event from a pre-existing list using its ID")
-            4 -> println("Here's where you can change the details of an Event already in a list")
+            1 -> displayAllLists()
+            2 -> addEvent()
+            3 -> deleteEvent()
+            4 -> updateEvent()
             -1 -> {
                 println("Returning to Main Menu")
                 mainMenu()
@@ -70,6 +69,14 @@ fun mainMenu() : Int {
 
 }
 
+fun addList() {
+    TODO()
+}
+
+fun deleteList() {
+    TODO()
+}
+
 fun internalMenu(): Int {
     var subOption : Int
     var subInput : String? = null
@@ -87,4 +94,20 @@ fun internalMenu(): Int {
         -9
 
     return subOption
+}
+
+fun displayAllLists() {
+    TODO()
+}
+
+fun addEvent() {
+    TODO()
+}
+
+fun deleteEvent() {
+    TODO()
+}
+
+fun updateEvent() {
+    TODO()
 }
