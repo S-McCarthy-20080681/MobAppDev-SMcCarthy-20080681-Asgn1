@@ -179,7 +179,9 @@ fun expandLists() {
     println("Events in each List:")
     println()
 //    lists.forEach { //print each Event within each List when they are changed to Arrays later on
-        events.forEach { logger.info("${it}") }
+//        events.forEach { logger.info("${it}") }
+    events.forEach{ println("Name: ${astroEvent.title}, Category: ${astroEvent.category}, " +
+            "Occurring: ${astroEvent.closestTime}, Next Occurring: ${astroEvent.nextTime}") }
 //    }
     println()
 }
