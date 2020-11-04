@@ -1,7 +1,9 @@
 package asgn.astro.console.main
 
+import asgn.astro.console.models.AstroEventMemStore
 import asgn.astro.console.models.AstroEventModel
 import asgn.astro.console.models.AstroListModel
+import asgn.astro.console.models.AstroListMemStore
 import com.sun.java.accessibility.util.EventID
 import mu.KotlinLogging
 import kotlin.collections.ArrayList
@@ -9,9 +11,11 @@ import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
 
-val lists = ArrayList<AstroListModel>()
+//val lists = ArrayList<AstroListModel>()
+val lists = AstroListMemStore()
 var astroList = AstroListModel()
-val events = ArrayList<AstroEventModel>()
+//val events = ArrayList<AstroEventModel>()
+val events = AstroEventMemStore()
 var astroEvent = AstroEventModel()
 
 fun main (args: Array<String>) {
