@@ -1,10 +1,6 @@
 package asgn.astro.console.views
 
-import asgn.astro.console.main.*
-import asgn.astro.console.models.AstroListMemStore
-import asgn.astro.console.models.AstroEventMemStore
-import asgn.astro.console.models.AstroListModel
-import asgn.astro.console.models.AstroEventModel
+import asgn.astro.console.models.*
 
 class AstroView {
 
@@ -52,14 +48,14 @@ class AstroView {
         return subOption
     }
 
-    fun displayAllLists(lists: AstroListMemStore) {
+    fun displayAllLists(lists: AstroJSONStore) {
 //        println("Current Lists:")
 //        println("ID: ${AstroListMemStore.listID}, Name: ${astroList.list}")
         lists.logAllLists()
         println()
     }
 
-    fun expandLists(events: AstroEventMemStore) {
+    fun expandLists(events: AstroJSONStore) {
 //        println("Events in each List:")
 //        println("Name: ${astroEvent.title}, Category: ${astroEvent.category}," +
 //                "Occurring: ${astroEvent.closestTime}, Next Occurring: ${astroEvent.nextTime}")

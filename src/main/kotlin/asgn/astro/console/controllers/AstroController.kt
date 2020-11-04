@@ -2,20 +2,15 @@ package asgn.astro.console.controllers
 
 import asgn.astro.console.main.deleteEvent
 import asgn.astro.console.main.deleteList
-import asgn.astro.console.main.eventSearch
-import asgn.astro.console.main.listSearch
+import asgn.astro.console.models.*
 import mu.KotlinLogging
-import asgn.astro.console.models.AstroListMemStore
-import asgn.astro.console.models.AstroEventMemStore
-import asgn.astro.console.models.AstroListModel
-import asgn.astro.console.models.AstroEventModel
 import asgn.astro.console.views.AstroView
 import kotlin.system.exitProcess
 
 class AstroController {
 
-    val lists = AstroListMemStore()
-    val events = AstroEventMemStore()
+    val lists = AstroJSONStore()
+    val events = AstroJSONStore()
     val astroView = AstroView()
     val logger = KotlinLogging.logger {}
 

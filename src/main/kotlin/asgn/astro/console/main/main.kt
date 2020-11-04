@@ -1,18 +1,15 @@
 package asgn.astro.console.main
 
-import asgn.astro.console.models.AstroEventMemStore
-import asgn.astro.console.models.AstroEventModel
-import asgn.astro.console.models.AstroListModel
-import asgn.astro.console.models.AstroListMemStore
+import asgn.astro.console.models.*
 import asgn.astro.console.views.AstroView
 import mu.KotlinLogging
 import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
 
-val lists = AstroListMemStore()
+val lists = AstroJSONStore()
 var astroList = AstroListModel()
-val events = AstroEventMemStore()
+val events = AstroJSONStore()
 var astroEvent = AstroEventModel()
 val astroView = AstroView()
 
