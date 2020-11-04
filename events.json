@@ -5,5 +5,12 @@
     "category": "Solar Eclipse",
     "closestTime": "04/11/2020",
     "nextTime": "31/0/2025"
+  },
+  {
+    "eventID": 6761257638069851828,
+    "title": "Taurids",
+    "category": "Meteor Shower",
+    "closestTime": "24/04/2021",
+    "nextTime": "30/05/2022"
   }
 ]

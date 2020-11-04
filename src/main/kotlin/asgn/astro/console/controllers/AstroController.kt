@@ -1,7 +1,5 @@
 package asgn.astro.console.controllers
 
-import asgn.astro.console.main.deleteEvent
-import asgn.astro.console.main.deleteList
 import asgn.astro.console.models.*
 import mu.KotlinLogging
 import asgn.astro.console.views.AstroView
@@ -39,6 +37,7 @@ class AstroController {
                             3 -> deleteEvent()
                             4 -> updateEvent()
                             5 -> searchEvent()
+                            6 -> deleteEvent()
                             9 -> {
                                 println("Returning to Main Menu")
                                 astroView.mainMenu()
@@ -51,6 +50,7 @@ class AstroController {
                 }
 
                 6 -> searchList()
+                7 -> deleteList()
                 0 -> {
                     println("Exiting App, Goodbye :)")
 
@@ -136,6 +136,34 @@ class AstroController {
         }
         else
             println("Event Not Updated...")
+    }
+
+    fun deleteList() {
+        astroView.displayAllLists(lists)
+        var searchId = astroView.getListID()
+        val aList = listSearch(searchId)
+
+        if (aList != null) { //if the list ID searched exists, delete that list
+            lists.deleteList(aList)
+            println("List Deleted!")
+            astroView.displayAllLists(lists)
+        }
+        else
+            println("List not deleted...")
+    }
+
+    fun deleteEvent() {
+        astroView.expandLists(events)
+        var searchId = astroView.getEventID()
+        val anEvent = eventSearch(searchId)
+
+        if (anEvent != null) { //if the event ID searched exists, delete that event
+            events.deleteEvent(anEvent)
+            println("Event Deleted!")
+            astroView.expandLists(events)
+        }
+        else
+            println("Event not deleted...")
     }
 
     fun searchList() {

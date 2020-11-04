@@ -83,6 +83,16 @@ class AstroJSONStore : AstroListStore, AstroEventStore {
         serializeEvent()
     }
 
+    override fun deleteList(astroList: AstroListModel) {
+        lists.remove(astroList)
+        serializeList()
+    }
+
+    override fun deleteEvent(astroEvent: AstroEventModel) {
+        events.remove(astroEvent)
+        serializeEvent()
+    }
+
     internal fun logAllLists() {
         lists.forEach { logger.info("${it}") }
     }

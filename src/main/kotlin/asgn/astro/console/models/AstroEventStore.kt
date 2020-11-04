@@ -10,4 +10,6 @@ interface AstroEventStore {
 
     fun updateEvent(astroEvent: AstroEventModel)
 
+    fun deleteEvent(astroEvent: AstroEventModel)
+
 }

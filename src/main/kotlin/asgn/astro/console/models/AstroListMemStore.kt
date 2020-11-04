@@ -36,6 +36,10 @@ class AstroListMemStore: AstroListStore {
         }
     }
 
+    override fun deleteList(astroList: AstroListModel) {
+        lists.remove(astroList)
+    }
+
     internal fun logAllLists() {
         lists.forEach { logger.info("${it}") }
     }

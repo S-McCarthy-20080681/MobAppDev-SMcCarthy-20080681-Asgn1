@@ -39,6 +39,10 @@ class AstroEventMemStore: AstroEventStore {
         }
     }
 
+    override fun deleteEvent(astroEvent: AstroEventModel) {
+        events.remove(astroEvent)
+    }
+
     internal fun logAllEvents() {
         events.forEach { logger.info("${it}") }
     }
