@@ -1,5 +1,7 @@
 package asgn.astro.console.controllers
 
+import asgn.astro.console.main.deleteEvent
+import asgn.astro.console.main.deleteList
 import asgn.astro.console.main.eventSearch
 import asgn.astro.console.main.listSearch
 import mu.KotlinLogging
@@ -8,6 +10,7 @@ import asgn.astro.console.models.AstroEventMemStore
 import asgn.astro.console.models.AstroListModel
 import asgn.astro.console.models.AstroEventModel
 import asgn.astro.console.views.AstroView
+import kotlin.system.exitProcess
 
 class AstroController {
 
@@ -20,6 +23,54 @@ class AstroController {
         logger.info { "Launching AstroTracker App" }
         println("AstroTracker App Version 1.0")
         println("Susan McCarthy, 20080681")
+    }
+
+    fun start() {
+        var input: Int
+
+        do {
+            input = astroView.mainMenu()
+            when (input) {
+                1 -> addList()
+                2 -> deleteList()
+                3 -> astroView.displayAllLists(lists)
+                4 -> updateList()
+                5 -> while (input == 5) {
+                    do {
+                        input = astroView.internalMenu()
+                        when (input) {
+                            1 -> astroView.expandLists(events)
+                            2 -> addEvent()
+                            3 -> deleteEvent()
+                            4 -> updateEvent()
+                            5 -> searchEvent()
+                            9 -> {
+                                println("Returning to Main Menu")
+                                astroView.mainMenu()
+                            }
+                            else -> println("Invalid option, try again!")
+                        }
+                        println()
+                    } while (input != 9)
+                    logger.info { "Returning to AstroTracker Main Menu" }
+                }
+
+                6 -> searchList()
+                0 -> {
+                    println("Exiting App, Goodbye :)")
+
+                }
+                else -> println("Invalid option, try again!")
+            }
+            println()
+        } while (input != 0)
+        logger.info { "Shutting Down AstroTracker App" }
+
+        var subInput: Int
+
+        if (input == 0) {
+            exitProcess(0)
+        }
     }
 
     fun mainMenu() : Int {
