@@ -68,14 +68,6 @@ class AstroController {
         }
     }
 
-    fun mainMenu() : Int {
-        return astroView.mainMenu()
-    }
-
-    fun internalMenu() : Int {
-        return astroView.internalMenu()
-    }
-
     fun addList() {
         var aList = AstroListModel()
 
@@ -92,14 +84,6 @@ class AstroController {
             events.createEvent(anEvent)
         else
             logger.info("Event Not Added")
-    }
-
-    fun listLists() {
-        astroView.displayAllLists(lists)
-    }
-
-    fun listEvents() {
-        astroView.expandLists(events)
     }
 
     fun updateList() {
@@ -167,11 +151,13 @@ class AstroController {
     }
 
     fun searchList() {
+        lists.logAllLists()
         val aList = listSearch(astroView.getListID())!!
         astroView.showList(aList)
     }
 
     fun searchEvent() {
+        events.logAllEvents()
         val anEvent = eventSearch(astroView.getEventID())!!
         astroView.showEvent(anEvent)
     }

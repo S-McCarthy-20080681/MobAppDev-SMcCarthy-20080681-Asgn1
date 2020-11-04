@@ -10,7 +10,7 @@ internal fun getEventId(): Long {
     return lastEventId++
 }
 
-class AstroEventMemStore: AstroEventStore {
+class AstroEventMemStore : AstroEventStore {
 
     val events = ArrayList<AstroEventModel>()
 

@@ -65,14 +65,14 @@ class AstroView {
         println()
     }
 
-    fun showList(astroList: AstroListModel){
+    fun showList(astroList: AstroListModel){ //what is returned to console if searchList option is chosen
         if (astroList != null)
             println("List Details: '$astroList'")
         else
             println("List not found...")
     }
 
-    fun showEvent(astroEvent: AstroEventModel) {
+    fun showEvent(astroEvent: AstroEventModel) { //what is returned to console if searchEvent option is chosen
         if (astroEvent != null)
             println("Event Details: \n $astroEvent")
         else
@@ -85,6 +85,7 @@ class AstroView {
         astroList.list = readLine()!!
 
         return astroList.list.isNotEmpty()
+        println("List added!")
     }
 
     fun addEventData(astroEvent: AstroEventModel): Boolean {
@@ -109,6 +110,8 @@ class AstroView {
 
         return astroEvent.title.isNotEmpty() && astroEvent.category.isNotEmpty() &&
                 astroEvent.closestTime.isNotEmpty() && astroEvent.nextTime.isNotEmpty()
+
+        println("Event added!")
     }
 
     fun updateListData(astroList: AstroListModel) : Boolean {
@@ -122,9 +125,11 @@ class AstroView {
             if (!tempList.isNullOrEmpty()) {
                 astroList.list = tempList
                 return true
+                println("List updated!")
             }
         }
         return false
+        println("List not updated...")
     }
 
     fun updateEventData(astroEvent: AstroEventModel) : Boolean {
@@ -158,9 +163,11 @@ class AstroView {
                     astroEvent.closestTime = tempCloseTime
                     astroEvent.nextTime = tempNextTime
                 return true
+                println("Event updated!")
             }
         }
         return false
+        println("Event not updated...")
     }
 
     fun getListID(): Long {

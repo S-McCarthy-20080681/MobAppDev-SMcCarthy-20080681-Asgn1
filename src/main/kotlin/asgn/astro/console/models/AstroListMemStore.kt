@@ -10,7 +10,7 @@ internal fun getListId(): Long {
     return lastListId++
 }
 
-class AstroListMemStore: AstroListStore {
+class AstroListMemStore : AstroListStore {
 
     val lists = ArrayList<AstroListModel>()
 
