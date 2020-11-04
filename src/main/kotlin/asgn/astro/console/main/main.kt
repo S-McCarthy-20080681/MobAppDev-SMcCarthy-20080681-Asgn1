@@ -18,10 +18,6 @@ fun main (args: Array<String>) {
 
 //-> -> BUG: Once returned to mainMenu, need to double-enter inputs after that before any function will run. <- <-//
 
-    logger.info { "Launching AstroTracker App" }
-    println("AstroTracker App Version 1.0")
-    println("Susan McCarthy, 20080681")
-
     runner.start()
 
 }
