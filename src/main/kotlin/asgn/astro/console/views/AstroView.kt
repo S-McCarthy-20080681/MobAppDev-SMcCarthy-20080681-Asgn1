@@ -16,7 +16,6 @@ class AstroView {
         println("4. Rename an existing list")
         println("5. Event Editor Menu")
         println("6. Search for a List")
-        println("7. Delete a List")
         println("0. Exit App")
         println("Please select an option: ")
         input = readLine()!! //takes in the user's choice
@@ -39,8 +38,8 @@ class AstroView {
         println("3. Remove an Event from an existing List")
         println("4. Update/Change an Event")
         println("5. Search for an Event")
-        println("6. Delete an Event")
         println("9. Return to Main Menu")
+        println("Please select an option: ")
         input = readLine()!!
         subOption = if (input.toIntOrNull() != null && !input.isEmpty())
             input.toInt()
@@ -151,7 +150,7 @@ class AstroView {
             tempCloseTime = readLine()!!
             println()
 
-            print("Currently, this Event will next occur on: ${astroEvent.nextTime}")
+            print("Currently, this Event will next occur on: ${astroEvent.nextTime} \n")
             print("Enter a new next-date for your Event: [dd/mm/yyyy] \n")
             tempNextTime = readLine()!!
             println()

@@ -16,6 +16,7 @@ class AstroController {
         logger.info { "Launching AstroTracker App" }
         println("AstroTracker App Version 1.0")
         println("Susan McCarthy, 20080681")
+        println()
     }
 
     fun start() {
@@ -37,7 +38,6 @@ class AstroController {
                             3 -> deleteEvent()
                             4 -> updateEvent()
                             5 -> searchEvent()
-                            6 -> deleteEvent()
                             9 -> {
                                 println("Returning to Main Menu")
                                 astroView.mainMenu()
@@ -50,7 +50,6 @@ class AstroController {
                 }
 
                 6 -> searchList()
-                7 -> deleteList()
                 0 -> {
                     println("Exiting App, Goodbye :)")
 
@@ -71,8 +70,10 @@ class AstroController {
     fun addList() {
         var aList = AstroListModel()
 
-        if (astroView.addListData(aList))
+        if (astroView.addListData(aList)) {
             lists.createList(aList)
+            println("List added!")
+        }
         else
             logger.info("List Not Added")
     }
@@ -80,8 +81,10 @@ class AstroController {
     fun addEvent() {
         var anEvent = AstroEventModel()
 
-        if (astroView.addEventData(anEvent))
+        if (astroView.addEventData(anEvent)) {
             events.createEvent(anEvent)
+            println("Event added!")
+        }
         else
             logger.info("Event Not Added")
     }
@@ -94,8 +97,7 @@ class AstroController {
         if (aList != null) {
             if (astroView.updateListData(aList)) {
                 lists.updateList(aList)
-                astroView.showList(aList)
-                logger.info("List Updated: $aList")
+                println("List Updated: $aList")
             }
             else
                 logger.info("List Not Updated")
@@ -112,8 +114,7 @@ class AstroController {
         if (anEvent != null) {
             if (astroView.updateEventData(anEvent)) {
                 events.updateEvent(anEvent)
-                astroView.showEvent(anEvent)
-                logger.info("Event Updated: \n $anEvent")
+                println("Event Updated: \n $anEvent")
             }
             else
                 logger.info("Event Not Updated")
@@ -130,7 +131,7 @@ class AstroController {
         if (aList != null) { //if the list ID searched exists, delete that list
             lists.deleteList(aList)
             println("List Deleted!")
-            astroView.displayAllLists(lists)
+//            astroView.displayAllLists(lists)
         }
         else
             println("List not deleted...")
@@ -144,10 +145,10 @@ class AstroController {
         if (anEvent != null) { //if the event ID searched exists, delete that event
             events.deleteEvent(anEvent)
             println("Event Deleted!")
-            astroView.expandLists(events)
         }
-        else
+        else {
             println("Event not deleted...")
+        }
     }
 
     fun searchList() {
