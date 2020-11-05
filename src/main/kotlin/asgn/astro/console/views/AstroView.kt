@@ -189,7 +189,7 @@ class AstroView {
 
         var strID : String? //String to hold user input
         var searchID : Long //Long to hold converted string ID
-        print("Enter Entry ID: ")
+        print("Enter Event ID: ")
         strID = readLine()!!
         searchID = if (strID.toLongOrNull() != null && !strID.isEmpty())
             strID.toLong()
