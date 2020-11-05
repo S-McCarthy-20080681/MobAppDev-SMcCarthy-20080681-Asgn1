@@ -29,6 +29,7 @@ class AstroView {
     }
 
     fun internalMenu(): Int {
+
         var subOption : Int
         var input : String? = null
 
@@ -47,6 +48,7 @@ class AstroView {
             -9
 
         return subOption
+
     }
 
     fun displayAllLists(lists: AstroJSONStore) {
